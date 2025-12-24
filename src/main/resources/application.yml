@@ -1,0 +1,12 @@
+spring:
+  application:
+  name: RestDemo # for testing Advanced Concept, tool and technology to this application
+  data:
+    mongodb:
+          host: mongodb
+          port: 27017
+          database: user_db
+
+server:
+  port: 8080
+
