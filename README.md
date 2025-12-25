@@ -79,7 +79,7 @@ RestDemo-0.0.1-SNAPSHOT.jar
 ### 3. Build Docker image
 
 ```bash
-docker build -t ansh/rest-demo:v1 .
+   docker build -t ansh/rest-demo:v1 .
 ```
 
 > Note: The `.` at the end is important. It tells Docker to use the current directory.
@@ -99,7 +99,7 @@ Confirm that `ansh/rest-demo:v1` exists in the list.
 ### 5. Run the container
 
 ```bash
-docker run -p 8080:8080 ansh/rest-demo:v1
+  docker run -p 8080:8080 ansh/rest-demo:v1
 ```
 
 The application will start inside a Docker container and listen on port 8080.
@@ -140,4 +140,84 @@ Planned improvements may include:
 ## Purpose
 
 This repository acts as a working reference and practice space where learning is backed by implementation, not just theory.
+
+## Containerized Setup (Application + MongoDB)
+
+This project is now fully containerized using Docker and Docker Compose.  
+The application runs inside a container and connects to MongoDB **only via containers**, not a local database.
+
+### Services Overview
+- **Application** – Spring Boot REST app
+- **MongoDB** – Database container
+- **Mongo Express** – Web UI for MongoDB
+
+---
+
+## Prerequisites
+- Docker
+- Docker Compose
+- Java & Maven (only for building the JAR)
+
+---
+
+## Build Application JAR
+Run this before building Docker images:
+
+```bash
+mvn clean package
+dir target
+RestDemo-0.0.1-SNAPSHOT.jar
+```
+
+### Docker Compose Structure
+```
+rest-demo/
+├── Dockerfile
+├── docker-compose.yml
+├── src/
+├── target/
+└── README.md
+```
+#### Build and start all services:
+```bash
+docker compose up --build
+```
+
+#### Run in background:
+```bash
+docker compose up -d
+```
+
+#### Stop all containers:
+```bash
+docker compose down
+```
+
+#### Verify Running Containers
+```bash
+  docker ps
+```
+
+You should see:
+
+* rest-demo-app
+* mongodb
+* mongo-express
+---
+| Service       | URL                                            |
+| ------------- | ---------------------------------------------- |
+| Application   | [http://localhost:8080](http://localhost:8080) |
+| Mongo Express | [http://localhost:8081](http://localhost:8081) |
+| MongoDB       | localhost:27017                                |
+---
+## Notes
+* No local database is used
+* MongoDB data is persisted using Docker volumes
+* This repository is used to practice container-based backend concepts 
+* Future updates will include scaling, networking, and orchestration concepts 
+* Fully Dockerized setup
+* MongoDB runs inside a container
+* Mongo Express used for database inspection
+* No local database dependency
+---
 
